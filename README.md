@@ -1,0 +1,1 @@
+This is a tool for parsing OER content for insertion into Instructure Canvas
