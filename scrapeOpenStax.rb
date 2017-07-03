@@ -1,4 +1,4 @@
-require 'HTTParty'
+require 'httparty'
 require 'fileutils'
 
 subjects = [
@@ -37,13 +37,17 @@ subjects = [
 filepath = "./openstax/"
 FileUtils.mkdir_p(filepath)
 
-subjects.for_each do | topic |
+subjects.each do | topic |
+    puts "Fetching " + topic + "-OP.pdf"
     link = "https://d3bxy9euw4e147.cloudfront.net/oscms-prodcms/media/documents/" + topic + "-OP.pdf"
     filename = File.join(filepath, topic + ".pdf")
     File.open(filename, "w") do |file|
-        HTTParty.get(cdn.original_cdn_url, stream_body: true) do |fragment|
+        HTTParty.get(link, stream_body: true) do |fragment|
           file.write(fragment)
         end
     end
-    File.close(filename)
 end
+
+# TODO: Upload scraped files to a location in canvas.
+# Since the upload will be largely universal, we should
+# decide how to do that later.
